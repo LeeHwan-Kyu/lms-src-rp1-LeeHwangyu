@@ -41,6 +41,9 @@ public class AttendanceController {
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
 	public String index(Model model) {
+		//Task.25-李
+		boolean hasUnentered = studentAttendanceService.notEnterCount();
+		model.addAttribute("hasUnentered", hasUnentered);
 
 		// 勤怠一覧の取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService

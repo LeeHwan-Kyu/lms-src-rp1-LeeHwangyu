@@ -65,4 +65,9 @@ public interface TStudentAttendanceMapper {
 	 */
 	Boolean update(TStudentAttendance tStudentAttendance);
 
+	int notEnterCount(
+			@Param("lmsUserId") String lmsUserId,
+			@Param("deleteFlg") short dbFlgFalse,
+			@Param("trainingDate") Date trainingDate);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
+import jp.co.sss.lms.dto.StudentAttendanceDto;
 import jp.co.sss.lms.entity.TStudentAttendance;
 import jp.co.sss.lms.enums.AttendanceStatusEnum;
 import jp.co.sss.lms.form.AttendanceForm;
@@ -43,6 +44,17 @@ public class StudentAttendanceService {
 	private LoginUserDto loginUserDto;
 	@Autowired
 	private TStudentAttendanceMapper tStudentAttendanceMapper;
+	@Autowired
+	private StudentAttendanceDto studentAttendanceDto;
+
+	public boolean notEnterCount() {
+		int count = tStudentAttendanceMapper.notEnterCount(
+				studentAttendanceDto.getLmsUserId(),
+				Constants.DB_FLG_FALSE,
+				new Date());
+		System.out.println("未入力件数: " + count);
+		return count > 0;
+	}
 
 	/**
 	 * 勤怠一覧情報取得
