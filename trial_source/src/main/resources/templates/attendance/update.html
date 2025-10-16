@@ -23,20 +23,24 @@
 		<div class="bs-component col-sm-12">
 
 			<form th:action="@{/attendance/update}" method="post">
-				<!--Task.29勤怠管理直接変更画面 - 李　-->
-				<div style="max-height: 600px; overflow-y: auto;">
+				<table class="table table-hover dataTable no-footer">
+					<thead>
+						<tr>
+							<th class="w140">日付</th>
+							<th class="w300">コース内容</th>
+							<th class="w70">出勤</th>
+							<th class="w70">退勤</th>
+							<th class="w80">中抜け時間</th>
+							<th class="w70">ステータス</th>
+							<th class="w240">備考</th>
+						</tr>
+					</thead>
+				</table>
+				
+				<!--Task.29-李-->
+				<div class="scroll-body">
 					<table class="table table-hover dataTable no-footer">
-						<thead>
-							<tr>
-								<th class="w140">日付</th>
-								<th class="w300">コース内容</th>
-								<th class="w70">出勤</th>
-								<th class="w70">退勤</th>
-								<th class="w80">中抜け時間</th>
-								<th class="w70">ステータス</th>
-								<th class="w240">備考</th>
-							</tr>
-						</thead>
+
 						<tbody>
 							<th:block th:each="dailyAttendanceForm, stat : *{attendanceForm.attendanceList}">
 								<tr>
@@ -84,18 +88,19 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="form-group">
-					<th:block th:if="${session.loginUserDto.role == '0001'}">
-						<a th:href="@{/attendance/detail}" class="btn btn-default">戻る</a>
-					</th:block>
-					<th:block th:if="${session.loginUserDto.role != '0001'}">
-						<input type="submit" value="戻る" name="indexCompany" class="btn btn-default" />
-					</th:block>
-					<input type="submit" value="更新" name="complete" class="btn btn-info" />
-				</div>
-
-			</form>
 		</div>
+		<div class="form-group">
+			<th:block th:if="${session.loginUserDto.role == '0001'}">
+				<a th:href="@{/attendance/detail}" class="btn btn-default">戻る</a>
+			</th:block>
+			<th:block th:if="${session.loginUserDto.role != '0001'}">
+				<input type="submit" value="戻る" name="indexCompany" class="btn btn-default" />
+			</th:block>
+			<input type="submit" value="更新" name="complete" class="btn btn-info" />
+		</div>
+
+		</form>
+	</div>
 	</div>
 
 </body>
