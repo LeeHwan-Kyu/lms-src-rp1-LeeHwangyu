@@ -1707,10 +1707,3 @@ body {
 	float: left;
 	width: 50%;
 }
-
-
-/*Task.29 -李*/
-.scroll-body {
-	max-height: 560px;
-	overflow-y: auto;
-}
