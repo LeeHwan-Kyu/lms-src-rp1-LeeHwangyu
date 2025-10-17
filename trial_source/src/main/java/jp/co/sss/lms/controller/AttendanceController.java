@@ -41,7 +41,7 @@ public class AttendanceController {
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
 	public String index(Model model) {
-		//Task.25-李
+		//Task.25-李 勤怠管理画面
 		boolean hasUnentered = studentAttendanceService.notEnterCount();
 		model.addAttribute("hasUnentered", hasUnentered);
 

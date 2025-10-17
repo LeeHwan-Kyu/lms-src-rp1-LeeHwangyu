@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.sss.lms.mapper.TStudentAttendanceMapper">
+<!--Task.25-李-->
 	<select id="notEnterCount" resultType="int">
 		SELECT
 		COUNT(*)
 		FROM t_student_attendance
 		WHERE lms_user_id = #{lmsUserId}
 		AND delete_flg = #{deleteFlg}
-		AND training_date &lt; CAST(#{trainingDate} AS date)
+		AND training_date &lt; #{trainingDate}
 		AND status != 1
 		AND (
 		training_start_time = ''

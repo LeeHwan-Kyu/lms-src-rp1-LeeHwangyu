@@ -81,10 +81,10 @@
 			setInterval(function () {
 				$("#now").text('現在の時刻は　' + getClock() + '　です。');
 			}, 1000);
-			
+
 			<!--Task.25-李-->
 			const hasUnentered = /*[[${hasUnentered}]]*/ false;
-			if (hasUnentered) {
+			if (hasUnentered === true) {
 				alert("過去日の勤怠に未入力があります。");
 			}
 
