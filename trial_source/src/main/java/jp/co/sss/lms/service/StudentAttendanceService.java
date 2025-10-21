@@ -45,15 +45,19 @@ public class StudentAttendanceService {
 	private TStudentAttendanceMapper tStudentAttendanceMapper;
 
 	/**
+	 * Task25-李
 	 * 過去日の勤怠未入力をチェックする
 	 * @return 未入力の場合はtrue,入力の場合はfalse
 	 */
 	public boolean notEnterCount() {
+		// ← 00:00時点の当日日付
+		Date trainingDate = attendanceUtil.getTrainingDate();
 		int count = tStudentAttendanceMapper.notEnterCount(
 				loginUserDto.getLmsUserId(),
 				Constants.DB_FLG_FALSE,
-				new Date());
+				trainingDate);
 		return count > 0;
+		
 	}
 
 	/**
