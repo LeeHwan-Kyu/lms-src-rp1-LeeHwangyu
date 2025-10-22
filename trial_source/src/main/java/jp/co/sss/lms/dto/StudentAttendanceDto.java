@@ -30,4 +30,9 @@ public class StudentAttendanceDto {
 	private Integer blankTime;
 	/** 勤怠状態画面表示名 */
 	private String statusDispName;
+	//Task.26-李
+	private String startHour;
+	private String startMinute;
+	private String endHour;
+	private String endMinute;
 }
