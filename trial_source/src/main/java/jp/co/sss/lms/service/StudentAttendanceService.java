@@ -49,11 +49,11 @@ public class StudentAttendanceService {
 	 * Task25-李
 	 * 過去日の勤怠未入力をチェックする
 	 * @return 未入力の場合はtrue,入力の場合はfalse
+	 * @throws ParseException 
 	 */
-	public boolean hasUnenteredAttendance() {
-		Date trainingDate = new Date();
+	public boolean hasUnenteredAttendance() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.format(trainingDate);
+		Date trainingDate = sdf.parse(sdf.format(new Date()));
 		int count = tStudentAttendanceMapper.notEnterCount(
 				loginUserDto.getLmsUserId(),
 				Constants.DB_FLG_FALSE,
