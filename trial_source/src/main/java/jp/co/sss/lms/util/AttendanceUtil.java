@@ -146,5 +146,76 @@ public class AttendanceUtil {
 		}
 		return false;
 	}
+	
+	
+	
+	/**
+	 * 時間マップを取得（0～23時、１時間単位）
+	 * Task.26-李
+	 * @return 時間マップ
+	 */
+	public LinkedHashMap<Integer, String> setHourMap() {
+	    LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+	    map.put(null, ""); // 空欄（未選択用）
+
+	    for (int i = 0; i < 24; i++) {
+	    	String hour = String.format("%02d", i);
+	        map.put(i, hour);
+	    }
+	    return map;
+	}
+
+	/**
+	 * 分マップを取得（0～59分, 1分単位）
+	 * Task.26-李
+	 * @return 分マップ
+	 */
+	public LinkedHashMap<Integer, String> setMinuteMap() {
+	    LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+	    map.put(null, ""); // 空欄（未選択用）
+
+	    for (int i = 0; i < 60; i++) {
+	    	String minute = String.format("%02d", i);
+	        map.put(i, minute);
+	    }
+	    return map;
+	}
+	
+	/**
+	 * 出勤時間から時を抽出
+	 * 	Task.26-李
+	 */
+	public String extractStartHour(String startTime) {
+	    if (startTime == null || startTime.isEmpty() || !startTime.contains(":")) return "";
+	    return startTime.split(":")[0];
+	}
+
+	/**
+	 * 出勤時間から分を抽出
+	 * 	Task.26-李
+	 */
+	public String extractStartMinute(String startTime) {
+	    if (startTime == null || startTime.isEmpty() || !startTime.contains(":")) return "";
+	    return startTime.split(":")[1];
+	}
+
+	/**
+	 * 退勤時間から時を抽出
+	 * 	Task.26-李
+	 */
+	public String extractEndHour(String endTime) {
+	    if (endTime == null || endTime.isEmpty() || !endTime.contains(":")) return "";
+	    return endTime.split(":")[0];
+	}
+
+	/**
+	 * 退勤時間から分を抽出
+	 * 	Task.26-李
+	 */
+	public String extractEndMinute(String endTime) {
+	    if (endTime == null || endTime.isEmpty() || !endTime.contains(":")) return "";
+	    return endTime.split(":")[1];
+	}
+	
 
 }

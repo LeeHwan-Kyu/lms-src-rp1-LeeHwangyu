@@ -23,14 +23,15 @@
 		<div class="bs-component col-sm-12">
 
 			<form th:action="@{/attendance/update}" method="post">
-				<table class="table table-hover dataTable no-footer">
+				<table class="table table-hover dataTable no-footer"
+					style="table-layout: fixed; width: calc(100% - 16px); margin-bottom: 0;">
 					<thead>
 						<tr>
 							<th class="w140">日付</th>
-							<th class="w300">コース内容</th>
-							<th class="w140">出勤</th>
-							<th class="w140">退勤</th>
-							<th class="w80">中抜け時間</th>
+							<th class="w150">コース内容</th>
+							<th class="w150">出勤</th>
+							<th class="w150">退勤</th>
+							<th class="w110">中抜け時間</th>
 							<th class="w80">ステータス</th>
 							<th class="w240">備考</th>
 						</tr>
@@ -60,52 +61,40 @@
 											th:value="${dailyAttendanceForm.statusDispName}" />
 									</th:block>
 									<td class="w140">[[${dailyAttendanceForm.dispTrainingDate}]]</td>
-									<td class="w300">[[${dailyAttendanceForm.sectionName}]]</td>
+									<td class="w150">[[${dailyAttendanceForm.sectionName}]]</td>
 									<!--Task.26-李-->
-									<td class="w140">
-  <select th:field="*{attendanceList[__${stat.index}__].startHour}"
-          class="form-control select-inline w45">
-    <option value="">--</option>
-    <option th:each="h : ${hourList}"
-            th:value="${h}"
-            th:text="${h}"
-            th:selected="${attendanceList[stat.index].startHour == h}">
-    </option>
-  </select>時
+									<td class="w150">
+										<select th:name="|attendanceList[${stat.index}].startHour|" class="form-control"
+											style="width:70px; display:inline-block;">
+											<option value="">--</option>
+											<option th:each="h : ${hourMap}" th:value="${h.key}" th:text="${h.value}"
+												th:selected="${h.key == dailyAttendanceForm.startHour}"></option>
+										</select>
+										<select th:name="|attendanceList[${stat.index}].startMinute|"
+											class="form-control" style="width:70px; display:inline-block;">
+											<option value="">--</option>
+											<option th:each="m : ${minuteMap}" th:value="${m.key}" th:text="${m.value}"
+												th:selected="${m.key == dailyAttendanceForm.startMinute}"></option>
+										</select>
+									</td>
+									<!--Task.26-李-->
+									<td class="w150">
+										<select th:name="|attendanceList[${stat.index}].endHour|" class="form-control"
+											style="width:70px; display:inline-block;">
+											<option value="">--</option>
+											<option th:each="h : ${hourMap}" th:value="${h.key}" th:text="${h.value}"
+												th:selected="${h.key == dailyAttendanceForm.endHour}"></option>
+										</select>
+										<select th:name="|attendanceList[${stat.index}].endMinute|" class="form-control"
+											style="width:70px; display:inline-block;">
+											<option value="">--</option>
+											<option th:each="m : ${minuteMap}" th:value="${m.key}" th:text="${m.value}"
+												th:selected="${m.key == dailyAttendanceForm.endMinute}"></option>
+										</select>
+									</td>
 
-  <select th:field="*{attendanceList[__${stat.index}__].startMinute}"
-          class="form-control select-inline w45">
-    <option value="">--</option>
-    <option th:each="m : ${minuteList}"
-            th:value="${m}"
-            th:text="${m}"
-            th:selected="${attendanceList[stat.index].startMinute == m}">
-    </option>
-  </select>分
-</td>
 
-<td class="w140">
-  <select th:field="*{attendanceList[__${stat.index}__].endHour}"
-          class="form-control select-inline w45">
-    <option value="">--</option>
-    <option th:each="h : ${hourList}"
-            th:value="${h}"
-            th:text="${h}"
-            th:selected="${attendanceList[stat.index].endHour == h}">
-    </option>
-  </select>時
-
-  <select th:field="*{attendanceList[__${stat.index}__].endMinute}"
-          class="form-control select-inline w45">
-    <option value="">--</option>
-    <option th:each="m : ${minuteList}"
-            th:value="${m}"
-            th:text="${m}"
-            th:selected="${attendanceList[stat.index].endMinute == m}">
-    </option>
-  </select>分
-</td>
-									<td class="w80">
+									<td class="w110">
 										<select th:name="|attendanceList[${stat.index}].blankTime|"
 											class="form-control">
 											<option th:each="blankTime : ${attendanceForm.blankTimes}"
@@ -138,6 +127,8 @@
 		</form>
 	</div>
 	</div>
+
+
 
 </body>
 

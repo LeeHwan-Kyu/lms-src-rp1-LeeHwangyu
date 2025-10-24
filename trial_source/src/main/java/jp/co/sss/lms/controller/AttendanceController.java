@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
 import jp.co.sss.lms.form.AttendanceForm;
+import jp.co.sss.lms.form.DailyAttendanceForm;
 import jp.co.sss.lms.service.StudentAttendanceService;
+import jp.co.sss.lms.util.AttendanceUtil;
 import jp.co.sss.lms.util.Constants;
 
 /**
@@ -30,6 +32,9 @@ public class AttendanceController {
 	@Autowired
 	private LoginUserDto loginUserDto;
 
+	@Autowired
+	private AttendanceUtil attendanceUtil;
+
 	/**
 	 * 勤怠管理画面 初期表示
 	 * 
@@ -40,9 +45,9 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
-	public String index(Model model) {
+	public String index(Model model) throws ParseException {
 		//Task.25-李 勤怠管理画面
-		boolean hasUnentered = studentAttendanceService.notEnterCount();
+		boolean hasUnentered = studentAttendanceService.hasUnenteredAttendance();
 		model.addAttribute("hasUnentered", hasUnentered);
 
 		// 勤怠一覧の取得
@@ -119,7 +124,10 @@ public class AttendanceController {
 		AttendanceForm attendanceForm = studentAttendanceService
 				.setAttendanceForm(attendanceManagementDtoList);
 		model.addAttribute("attendanceForm", attendanceForm);
-
+		//Task.26-李
+		model.addAttribute("blankTimeList", attendanceUtil.setBlankTime()); // 中抜け時間マップ
+		model.addAttribute("hourMap", attendanceUtil.setHourMap()); // 時間マップ
+		model.addAttribute("minuteMap", attendanceUtil.setMinuteMap()); // 分マップ
 		return "attendance/update";
 	}
 
@@ -135,6 +143,29 @@ public class AttendanceController {
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
+		//Task.26-李
+		if (attendanceForm.getAttendanceList() != null) {
+			for (DailyAttendanceForm daily : attendanceForm.getAttendanceList()) {
+
+				// 出勤時間
+				if (daily.getStartHour() != null && daily.getStartMinute() != null
+						&& !daily.getStartHour().isEmpty() && !daily.getStartMinute().isEmpty()) {
+					daily.setTrainingStartTime(String.format("%02d:%02d",
+							Integer.parseInt(daily.getStartHour()), Integer.parseInt(daily.getStartMinute())));
+				} else {
+					daily.setTrainingStartTime("");
+				}
+
+				// 退勤時間
+				if (daily.getEndHour() != null && daily.getEndMinute() != null
+						&& !daily.getEndHour().isEmpty() && !daily.getEndMinute().isEmpty()) {
+					daily.setTrainingEndTime(String.format("%02d:%02d",
+							Integer.parseInt(daily.getEndHour()), Integer.parseInt(daily.getEndMinute())));
+				} else {
+					daily.setTrainingEndTime("");
+				}
+			}
+		}
 
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);

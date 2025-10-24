@@ -256,6 +256,16 @@ public class StudentAttendanceService {
 			dailyAttendanceForm
 					.setTrainingStartTime(attendanceManagementDto.getTrainingStartTime());
 			dailyAttendanceForm.setTrainingEndTime(attendanceManagementDto.getTrainingEndTime());
+
+			//Task.26-李
+			String startTime = attendanceManagementDto.getTrainingStartTime();
+			String endTime = attendanceManagementDto.getTrainingEndTime();
+
+			dailyAttendanceForm.setStartHour(attendanceUtil.extractStartHour(startTime)); // 出勤時間（時）
+			dailyAttendanceForm.setStartMinute(attendanceUtil.extractStartMinute(startTime)); // 出勤時間（分）
+			dailyAttendanceForm.setEndHour(attendanceUtil.extractEndHour(endTime)); // 退勤時間（時）
+			dailyAttendanceForm.setEndMinute(attendanceUtil.extractEndMinute(endTime)); // 退勤時間（分）		
+
 			if (attendanceManagementDto.getBlankTime() != null) {
 				dailyAttendanceForm.setBlankTime(attendanceManagementDto.getBlankTime());
 				dailyAttendanceForm.setBlankTimeValue(String.valueOf(
