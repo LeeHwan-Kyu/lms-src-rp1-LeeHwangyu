@@ -66,13 +66,13 @@
 									<td class="w150">
 										<select th:name="|attendanceList[${stat.index}].startHour|" class="form-control"
 											style="width:70px; display:inline-block;">
-											<option value="">--</option>
+
 											<option th:each="h : ${hourMap}" th:value="${h.key}" th:text="${h.value}"
 												th:selected="${h.key == dailyAttendanceForm.startHour}"></option>
 										</select>
 										<select th:name="|attendanceList[${stat.index}].startMinute|"
 											class="form-control" style="width:70px; display:inline-block;">
-											<option value="">--</option>
+
 											<option th:each="m : ${minuteMap}" th:value="${m.key}" th:text="${m.value}"
 												th:selected="${m.key == dailyAttendanceForm.startMinute}"></option>
 										</select>
@@ -81,13 +81,13 @@
 									<td class="w150">
 										<select th:name="|attendanceList[${stat.index}].endHour|" class="form-control"
 											style="width:70px; display:inline-block;">
-											<option value="">--</option>
+
 											<option th:each="h : ${hourMap}" th:value="${h.key}" th:text="${h.value}"
 												th:selected="${h.key == dailyAttendanceForm.endHour}"></option>
 										</select>
 										<select th:name="|attendanceList[${stat.index}].endMinute|" class="form-control"
 											style="width:70px; display:inline-block;">
-											<option value="">--</option>
+
 											<option th:each="m : ${minuteMap}" th:value="${m.key}" th:text="${m.value}"
 												th:selected="${m.key == dailyAttendanceForm.endMinute}"></option>
 										</select>
@@ -121,7 +121,10 @@
 			<th:block th:if="${session.loginUserDto.role != '0001'}">
 				<input type="submit" value="戻る" name="indexCompany" class="btn btn-default" />
 			</th:block>
-			<input type="submit" value="更新" name="complete" class="btn btn-info" />
+			<input type="submit" value="更新" name="complete" class="btn btn-info" 
+			
+            
+				onclick="return confirm('更新します。よろしいですか？');" /><!--Task.27-李-->
 		</div>
 
 		</form>

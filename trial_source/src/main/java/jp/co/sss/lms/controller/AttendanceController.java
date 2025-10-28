@@ -143,6 +143,17 @@ public class AttendanceController {
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
+//Task.27-李
+//		studentAttendanceService.validateInput(attendanceForm, result);
+		if (result.hasErrors()) {
+			
+			model.addAttribute("attendanceForm", attendanceForm);
+			model.addAttribute("blankTimeList", attendanceUtil.setBlankTime());
+			model.addAttribute("hourMap", attendanceUtil.setHourMap());
+			model.addAttribute("minuteMap", attendanceUtil.setMinuteMap());
+			return "attendance/update";
+		}
+
 		//Task.26-李
 		if (attendanceForm.getAttendanceList() != null) {
 			for (DailyAttendanceForm daily : attendanceForm.getAttendanceList()) {
